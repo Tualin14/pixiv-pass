@@ -8,6 +8,8 @@ mod crypto;
 const PIXIV_REFERER: &str = "https://www.pixiv.net/";
 const PIXIV_USER_AGENT: &str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
+const PIXIV_META_URL: &str = "https://i.pximg.net";
+
 
 fn set_file_type(decrypt_url: &str) -> &str {
     match decrypt_url
@@ -40,7 +42,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
             },
             Err(_) => return Response::error("Bad Request", 400),
         };
-        if req_referer != access_referer.to_string() {
+        if !req_referer.starts_with(access_referer.to_string().as_str()) {
             return Response::error("Bad Request", 400);
         }
     };
@@ -65,6 +67,10 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
                     Ok(x) => x,
                     Err(err) => return Response::error(err, 400)
                 };
+
+                if !decrypt_url.starts_with(PIXIV_META_URL) {
+                    return Response::error("Bad Request", 400);
+                }
 
                 let client = reqwest::Client::new();
                 let resp = match client
