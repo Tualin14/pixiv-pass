@@ -75,16 +75,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crypto"
-version = "0.1.0"
-dependencies = [
- "aes-gcm",
- "base64",
- "getrandom",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "crypto-common"
 version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -93,6 +83,16 @@ dependencies = [
  "generic-array",
  "rand_core",
  "typenum",
+]
+
+[[package]]
+name = "crypto14"
+version = "0.1.0"
+dependencies = [
+ "aes-gcm",
+ "base64",
+ "getrandom",
+ "wasm-bindgen",
 ]
 
 [[package]]
